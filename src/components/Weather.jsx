@@ -55,7 +55,7 @@ export const Weather = () => {
 }
 
   useEffect(() => {
-    search("London"); 
+    search("santa barbara"); 
 
   },[]);
 
@@ -66,21 +66,21 @@ export const Weather = () => {
             <img src={search_icon} alt="search icon" />
         </div>
         <div className='weather-display'>
-          <img src={clear_icon} alt="clear icon" className='wheater-icon' />
+          <img src={weatherData.icon} alt="clear icon" className='wheater-icon' />
           <p className='temperature'> {weatherData.temperature} °C</p>
           <p className='location'> {weatherData.location} </p>
           <div className="weather-data">
             <div className="col">
               <img src={humidity_icon} alt="humidity icon" />
               <div className='weather-condition'>
-                <p> {weatherData.humidity} </p>
+                <p> {weatherData.humidity} %</p>
                 <span>Humidity</span>
               </div>
             </div>
             <div className="col">
               <img src={wind_icon} alt="wind icon" />
               <div className='weather-condition'>
-                <p> {weatherData.windSpeed} </p>
+                <p> {weatherData.windSpeed} km/h</p>
                 <span>Wind Speed</span>
               </div>
             </div>
