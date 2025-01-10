@@ -51,13 +51,26 @@
 }
 .weather-data {
     width: 100%;
-    margin-top: 40px;
+    margin-top: 30px;
     color: #fff;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }.weather-data .col {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 15px;
     margin: 0 10px;
+}
+.weather-data .col .weather-condition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.weather-data .col span {
+    display: block;
+    font-size: 16px;
+}
+.weather-data .col img {
+    width: 26px;
 }
