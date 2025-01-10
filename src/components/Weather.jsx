@@ -8,10 +8,12 @@ import rain_icon from '../assets/rain.png';
 import snow_icon from '../assets/snow.png';
 import wind_icon from '../assets/wind.png';
 // import { search } from '../utils/search';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 
 export const Weather = () => {
+
+  const inputRef = useRef()
 
   const [weatherData, setWeatherData] = useState(false);
 
@@ -34,11 +36,21 @@ export const Weather = () => {
   }
 
   const search = async (city) => {
+    if(city === "") {
+      alert("Enter city name")
+      return;
+    }
     try {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`
 
         const response = await fetch (url);
         const data = await response.json();
+
+      if(!response.ok) {
+        alert(data.message);
+        return;
+      }
+
         console.log(data);
         const icon = allIcons[data.weather[0].icon || clear_icon ]
         setWeatherData({
@@ -50,22 +62,24 @@ export const Weather = () => {
         });
         
     } catch (error) {
+      setWeatherData(false)
         console.log(error)
     }
 }
 
   useEffect(() => {
-    search("santa barbara"); 
+    search("Orlando"); 
 
   },[]);
 
   return (
     <div className='weather'>
         <div className='search-bar'>
-            <input type="text" placeholder='Type a city name' />
-            <img src={search_icon} alt="search icon" />
+            <input ref={inputRef} type="text" placeholder='Type a city name' /> {/*TODO... agregar onInputChange */} 
+            <img src={search_icon} alt="search icon" onClick={(() => search(inputRef.current.value))}/>
         </div>
-        <div className='weather-display'>
+        {weatherData?<>
+          <div className='weather-display'>
           <img src={weatherData.icon} alt="clear icon" className='wheater-icon' />
           <p className='temperature'> {weatherData.temperature} °C</p>
           <p className='location'> {weatherData.location} </p>
@@ -86,6 +100,9 @@ export const Weather = () => {
             </div>
           </div>
         </div>
+        </> : <></>}
+        
+        
     </div>
   )
 }
